@@ -52,8 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Send answer to dev if email is provided
-        if (config.email && config.email.includes('@')) {
+        // Send answer to dev if Form ID is provided
+        if (config.email && config.email.trim() !== "") {
             submitAnswer(userAnswer);
         } else {
             revealSurprise();
@@ -63,12 +63,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitAnswer = (ans) => {
         unlockBtn.disabled = true;
         unlockBtn.innerText = "Revealing...";
-        
+
         const formData = new FormData();
         formData.append('question', config.question);
         formData.append('answer', ans);
 
-        fetch(`https://formspree.io/f/${config.email.split('@')[0]}`, { 
+        fetch(`https://formspree.io/f/${config.email.trim()}`, {
             method: 'POST',
             body: formData,
             headers: { 'Accept': 'application/json' }
@@ -80,14 +80,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const revealSurprise = () => {
         questionArea.style.opacity = '0';
         questionArea.style.transform = 'translateY(-10px)';
-        
+
         setTimeout(() => {
             questionArea.classList.add('hidden');
             linkArea.classList.remove('hidden');
             message.innerText = "";
-            
+
             // Celebration Burst
-            for(let i=0; i<40; i++) {
+            for (let i = 0; i < 40; i++) {
                 setTimeout(() => createParticle(true), i * 50);
             }
         }, 300);
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const showMessage = (text, type) => {
         message.innerText = text;
         message.className = `message ${type}`;
-        
+
         if (type === 'error') {
             document.getElementById('surpriseCard').animate([
                 { transform: 'translateX(0)' },
@@ -135,23 +135,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const particle = document.createElement('div');
         particle.className = 'particle';
         particle.innerText = particles[Math.floor(Math.random() * particles.length)];
-        
+
         const startX = Math.random() * window.innerWidth;
         const duration = Math.random() * 3 + 4; // 4-7 seconds
         const size = Math.random() * 20 + 20; // 20-40px
-        
+
         particle.style.left = startX + 'px';
         particle.style.fontSize = size + 'px';
         particle.style.animationDuration = duration + 's';
         particle.style.opacity = Math.random() * 0.5 + 0.5;
-        
+
         if (burst) {
             particle.style.top = (Math.random() * 100 - 50) + 'px'; // Randomize top for burst
             particle.style.animationDuration = (Math.random() * 2 + 2) + 's'; // Faster for burst
         }
 
         document.body.appendChild(particle);
-        
+
         setTimeout(() => {
             particle.remove();
         }, duration * 1000);
