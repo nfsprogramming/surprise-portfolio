@@ -27,12 +27,15 @@ body {
     justify-content: center;
     align-items: center;
     color: var(--text-color);
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     position: relative;
+    padding: 20px 0;
 }
 
 /* Background blobs for depth */
-body::before, body::after {
+body::before,
+body::after {
     content: '';
     position: absolute;
     width: 300px;
@@ -56,14 +59,27 @@ body::after {
 }
 
 @keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 @keyframes float {
-    0% { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(100px, 50px) scale(1.2); }
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(100px, 50px) scale(1.2);
+    }
 }
 
 .container {
@@ -71,6 +87,11 @@ body::after {
     max-width: 450px;
     padding: 20px;
     z-index: 1;
+    margin: auto;
+}
+
+.admin-container {
+    max-width: 600px;
 }
 
 .card {
@@ -86,8 +107,15 @@ body::after {
 }
 
 @keyframes cardEntrance {
-    from { opacity: 0; transform: scale(0.9) translateY(30px); }
-    to { opacity: 1; transform: scale(1) translateY(0); }
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
 
 .card:hover {
@@ -101,21 +129,35 @@ body::after {
 }
 
 @keyframes fadeInDown {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .emoji {
     font-size: 60px;
     display: block;
     margin-bottom: 15px;
-    filter: drop-shadow(0 8px 15px rgba(0,0,0,0.1));
+    filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.1));
     animation: bounce 3s infinite ease-in-out;
 }
 
 @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
 h1 {
@@ -137,17 +179,32 @@ p {
     color: var(--text-dim);
 }
 
-.content > * {
+.content>* {
     animation: fadeInUp 0.8s ease-out both;
 }
 
-.content > *:nth-child(1) { animation-delay: 0.4s; }
-.content > *:nth-child(2) { animation-delay: 0.5s; }
-.content > *:nth-child(3) { animation-delay: 0.6s; }
+.content>*:nth-child(1) {
+    animation-delay: 0.4s;
+}
+
+.content>*:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.content>*:nth-child(3) {
+    animation-delay: 0.6s;
+}
 
 @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .input-group {
@@ -155,19 +212,21 @@ p {
     margin-bottom: 30px;
 }
 
-input, textarea {
+input,
+textarea {
     width: 100%;
     padding: 18px 0;
     font-size: 16px;
     border: none;
-    border-bottom: 2px solid rgba(0,0,0,0.05);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.05);
     background: transparent;
     color: var(--text-color);
     outline: none;
     transition: all 0.3s;
 }
 
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
     border-color: var(--primary-color);
     transform: translateY(-2px);
 }
@@ -240,8 +299,15 @@ button:active {
 }
 
 @keyframes popIn {
-    from { transform: scale(0.8); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .surprise-link:hover {
@@ -257,9 +323,17 @@ button:active {
 }
 
 @keyframes successPop {
-    0% { transform: scale(0); }
-    70% { transform: scale(1.2); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(0);
+    }
+
+    70% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 .hidden {
