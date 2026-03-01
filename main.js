@@ -29,11 +29,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Fallback for local testing
+        // Default public template for general visitors
         return {
-            question: localStorage.getItem('surpriseQuestion') || "Ready for a surprise?",
-            email: localStorage.getItem('devEmail') || "",
-            link: localStorage.getItem('surpriseLink') || "https://www.youtube.com"
+            question: "Welcome! Would you like to create a custom surprise link for a friend?",
+            email: "",
+            link: "/admin",
+            isDefault: true
         };
     };
 
@@ -42,6 +43,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize UI
     questionText.innerText = config.question;
     secretAnchor.href = config.link;
+    if (config.isDefault) {
+        secretAnchor.innerHTML = "✨ Create Your Surprise Link!";
+        secretAnchor.removeAttribute('target');
+    }
 
     // Functions
     const checkAnswer = () => {
@@ -160,7 +165,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // Continuous slow falling
     setInterval(() => createParticle(false), 800);
 
-    // Initial load
-    questionText.innerText = config.question;
-    secretAnchor.href = config.link;
 });
