@@ -29,8 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const generateLink = (q, e, l) => {
         const data = { q, e, l };
         const encoded = btoa(JSON.stringify(data));
-        const url = `${window.location.origin}${window.location.pathname.replace('admin.html', 'index.html')}?s=${encoded}`;
-        
+        // Vercel handles clean URLs so we should link to the domain root
+        const basePath = window.location.pathname.replace(/\/admin(\.html)?$/, '/');
+        const url = `${window.location.origin}${basePath}?s=${encoded}`;
+
         shareableLink.value = url;
         shareableLinkSection.classList.remove('hidden');
     };
@@ -55,15 +57,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             generateLink(question, email, link);
             showMessage("Link generated successfully! 🔗", "success");
-            
+
             // Celebration Burst
-            for(let i=0; i<30; i++) {
+            for (let i = 0; i < 30; i++) {
                 setTimeout(() => createParticle(true), i * 50);
             }
-            
+
             saveBtn.innerText = "Updated!";
             saveBtn.style.background = "var(--success-color)";
-            
+
             setTimeout(() => {
                 saveBtn.innerText = "Generate & Save Surprise Link";
                 saveBtn.style.background = "";
@@ -78,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const copyToClipboard = () => {
         shareableLink.select();
         document.execCommand('copy');
-        
+
         const originalText = copyBtn.innerText;
         copyBtn.innerText = "Copied!";
         setTimeout(() => copyBtn.innerText = originalText, 2000);
@@ -87,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const showMessage = (text, type) => {
         adminMessage.innerText = text;
         adminMessage.className = `message ${type}`;
-        
+
         setTimeout(() => {
             adminMessage.innerText = "";
         }, 3000);
@@ -106,15 +108,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const particle = document.createElement('div');
         particle.className = 'particle';
         particle.innerText = particles[Math.floor(Math.random() * particles.length)];
-        
+
         const startX = Math.random() * window.innerWidth;
         const duration = Math.random() * 3 + 5;
-        
+
         particle.style.left = startX + 'px';
         particle.style.fontSize = (Math.random() * 15 + 20) + 'px';
         particle.style.animationDuration = duration + 's';
         particle.style.opacity = burst ? '0.8' : '0.3';
-        
+
         if (burst) {
             particle.style.top = (Math.random() * 100 - 50) + 'px';
             particle.style.animationDuration = (Math.random() * 2 + 2) + 's';
