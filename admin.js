@@ -29,11 +29,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const generateLink = (q, e, l) => {
         const data = { q, e, l };
         const encoded = btoa(JSON.stringify(data));
-        // Vercel handles clean URLs so we should link to the domain root
-        const basePath = window.location.pathname.replace(/\/admin(\.html)?$/, '/');
-        const url = `${window.location.origin}${basePath}?s=${encoded}`;
+        
+        // Get the directory containing the current file to support local file preview
+        const url = new URL(window.location.href);
+        const basePath = url.href.substring(0, url.href.lastIndexOf('/')) + '/';
+        const finalUrl = `${basePath}index.html?s=${encoded}`;
 
-        shareableLink.value = url;
+        shareableLink.value = finalUrl;
         shareableLinkSection.classList.remove('hidden');
     };
 
@@ -102,29 +104,33 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial load
     loadSettings();
 
-    // Falling Effect System (Simplified for Admin)
+    // Falling Effect System (Digital Rain for Admin)
     const createParticle = (burst = false) => {
-        const particles = ['🎁', '✨', '💖', '⭐', '🎈', '🎉', '🎊', '🌸'];
+        const particles = ['0', '1', '{', '}', '<', '>', '/', ';', '*', '$', '#', '!'];
         const particle = document.createElement('div');
         particle.className = 'particle';
         particle.innerText = particles[Math.floor(Math.random() * particles.length)];
 
         const startX = Math.random() * window.innerWidth;
-        const duration = Math.random() * 3 + 5;
+        const duration = burst ? (Math.random() * 2 + 1) : (Math.random() * 5 + 5); 
+        const size = burst ? (Math.random() * 15 + 10) : (Math.random() * 12 + 8);
 
         particle.style.left = startX + 'px';
-        particle.style.fontSize = (Math.random() * 15 + 20) + 'px';
+        particle.style.fontSize = size + 'px';
         particle.style.animationDuration = duration + 's';
-        particle.style.opacity = burst ? '0.8' : '0.3';
+        particle.style.opacity = Math.random() * 0.4 + 0.1;
 
         if (burst) {
-            particle.style.top = (Math.random() * 100 - 50) + 'px';
-            particle.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            particle.style.top = (Math.random() * 50 + 20) + '%'; 
+            particle.style.color = '#fff';
+            particle.style.opacity = '1';
+            particle.style.filter = 'blur(1px)';
+            particle.style.zIndex = '100';
         }
 
         document.body.appendChild(particle);
         setTimeout(() => particle.remove(), duration * 1000);
     };
 
-    setInterval(() => createParticle(false), 1500);
+    setInterval(() => createParticle(false), 300);
 });

@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return {
             question: "Welcome! Would you like to create a custom surprise link for a friend?",
             email: "",
-            link: "/admin",
+            link: "admin.html",
             isDefault: true
         };
     };
@@ -134,25 +134,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     resetBtn.addEventListener('click', resetPage);
 
-    // Falling Effect System
     const createParticle = (burst = false) => {
-        const particles = ['🎁', '✨', '💖', '⭐', '🎈', '🌸'];
+        const particles = ['0', '1', '{', '}', '<', '>', '/', ';', '*', '$', '#', '!'];
         const particle = document.createElement('div');
         particle.className = 'particle';
         particle.innerText = particles[Math.floor(Math.random() * particles.length)];
 
         const startX = Math.random() * window.innerWidth;
-        const duration = Math.random() * 3 + 4; // 4-7 seconds
-        const size = Math.random() * 20 + 20; // 20-40px
+        const duration = burst ? (Math.random() * 2 + 1) : (Math.random() * 5 + 5); 
+        const size = burst ? (Math.random() * 15 + 10) : (Math.random() * 12 + 8);
 
         particle.style.left = startX + 'px';
         particle.style.fontSize = size + 'px';
         particle.style.animationDuration = duration + 's';
-        particle.style.opacity = Math.random() * 0.5 + 0.5;
+        particle.style.opacity = Math.random() * 0.4 + 0.1;
 
         if (burst) {
-            particle.style.top = (Math.random() * 100 - 50) + 'px'; // Randomize top for burst
-            particle.style.animationDuration = (Math.random() * 2 + 2) + 's'; // Faster for burst
+            particle.style.top = (Math.random() * 50 + 20) + '%'; 
+            particle.style.color = '#fff';
+            particle.style.opacity = '1';
+            particle.style.filter = 'blur(1px)';
+            particle.style.zIndex = '100';
         }
 
         document.body.appendChild(particle);
@@ -162,7 +164,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }, duration * 1000);
     };
 
-    // Continuous slow falling
-    setInterval(() => createParticle(false), 800);
+    // Continuous slow background falling
+    setInterval(() => createParticle(false), 200);
+
+    // Initial message
+    showMessage("Accessing NFS interface...", "success");
 
 });
